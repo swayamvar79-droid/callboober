@@ -28,6 +28,7 @@
             background-color: #f5f7ff;
             color: var(--dark);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .container {
@@ -362,6 +363,61 @@
             width: 100%;
         }
 
+        /* Results Section */
+        .results {
+            padding: 80px 0;
+            background: #f5f7ff;
+            display: none;
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .progress-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .progress-bar {
+            height: 20px;
+            background: #e1e5ee;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient);
+            width: 0%;
+            transition: width 2s ease-in-out;
+        }
+
         /* Pricing */
         .pricing {
             padding: 100px 0;
@@ -644,6 +700,8 @@
 
             nav ul {
                 gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
             }
 
             .hero h1 {
@@ -667,9 +725,48 @@
                 transform: translateY(-10px);
             }
         }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: var(--success);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            display: none;
+            transform: translateX(150%);
+            transition: transform 0.3s;
+        }
+
+        .notification.show {
+            display: block;
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            background: var(--danger);
+        }
     </style>
 </head>
 <body>
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
     <!-- Header -->
     <header>
         <div class="container">
@@ -683,6 +780,7 @@
                         <li><a href="#home">Home</a></li>
                         <li><a href="#features">Features</a></li>
                         <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#bomber-tool">Bomber Tool</a></li>
                         <li><a href="#pricing">Pricing</a></li>
                         <li><a href="#testimonials">Testimonials</a></li>
                         <li><a href="#faq">FAQ</a></li>
@@ -808,17 +906,17 @@
                 <div class="form-group">
                     <label>Bombing Mode</label>
                     <div class="tool-options">
-                        <div class="option-card active">
+                        <div class="option-card active" data-mode="standard">
                             <i class="fas fa-bomb"></i>
                             <h4>Standard</h4>
                             <p>10 calls per minute</p>
                         </div>
-                        <div class="option-card">
+                        <div class="option-card" data-mode="aggressive">
                             <i class="fas fa-fire"></i>
                             <h4>Aggressive</h4>
                             <p>20 calls per minute</p>
                         </div>
-                        <div class="option-card">
+                        <div class="option-card" data-mode="nuclear">
                             <i class="fas fa-skull"></i>
                             <h4>Nuclear</h4>
                             <p>30+ calls per minute</p>
@@ -837,8 +935,49 @@
                     <input type="number" id="total-calls" class="form-control" value="50" min="10" max="500">
                 </div>
                 
-                <button class="btn btn-primary btn-large">
+                <button class="btn btn-primary btn-large" id="start-bombing">
                     <i class="fas fa-play-circle"></i> Start Bombing
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results" id="results">
+        <div class="container">
+            <div class="section-title">
+                <h2>Bombing in Progress</h2>
+                <p>Your call bombing attack is currently running</p>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-value" id="calls-made">0</div>
+                    <p>Calls Made</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="calls-answered">0</div>
+                    <p>Calls Answered</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="success-rate">0%</div>
+                    <p>Success Rate</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="time-elapsed">0s</div>
+                    <p>Time Elapsed</p>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <h3>Bombing Progress</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="progress-text" id="progress-text">0% Complete</div>
+                
+                <button class="btn btn-primary" id="stop-bombing" style="margin-top: 20px;">
+                    <i class="fas fa-stop-circle"></i> Stop Bombing
                 </button>
             </div>
         </div>
@@ -1042,6 +1181,7 @@
                         <li><a href="#home">Home</a></li>
                         <li><a href="#features">Features</a></li>
                         <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#bomber-tool">Bomber Tool</a></li>
                         <li><a href="#pricing">Pricing</a></li>
                         <li><a href="#testimonials">Testimonials</a></li>
                     </ul>
@@ -1074,14 +1214,35 @@
     </footer>
 
     <script>
-        // FAQ toggle functionality
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const item = question.parentElement;
-                item.classList.toggle('active');
-            });
+        // DOM Elements
+        const phoneNumberInput = document.getElementById('phone-number');
+        const callDurationRange = document.getElementById('call-duration');
+        const rangeValue = document.querySelector('.range-value');
+        const totalCallsInput = document.getElementById('total-calls');
+        const startBombingBtn = document.getElementById('start-bombing');
+        const stopBombingBtn = document.getElementById('stop-bombing');
+        const resultsSection = document.getElementById('results');
+        const progressFill = document.getElementById('progress-fill');
+        const progressText = document.getElementById('progress-text');
+        const callsMadeElement = document.getElementById('calls-made');
+        const callsAnsweredElement = document.getElementById('calls-answered');
+        const successRateElement = document.getElementById('success-rate');
+        const timeElapsedElement = document.getElementById('time-elapsed');
+        const notification = document.getElementById('notification');
+        
+        // Bombing state
+        let isBombing = false;
+        let bombingInterval;
+        let startTime;
+        let callsMade = 0;
+        let callsAnswered = 0;
+        let totalCalls = 0;
+        
+        // Update range value display
+        callDurationRange.addEventListener('input', () => {
+            rangeValue.textContent = `${callDurationRange.value} seconds`;
         });
-
+        
         // Option card selection
         document.querySelectorAll('.option-card').forEach(card => {
             card.addEventListener('click', () => {
@@ -1091,27 +1252,156 @@
                 card.classList.add('active');
             });
         });
-
-        // Range value display
-        const range = document.getElementById('call-duration');
-        const rangeValue = document.querySelector('.range-value');
         
-        range.addEventListener('input', () => {
-            rangeValue.textContent = `${range.value} seconds`;
+        // FAQ toggle functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+            });
         });
-
+        
+        // Show notification
+        function showNotification(message, isError = false) {
+            notification.textContent = message;
+            notification.className = 'notification';
+            
+            if (isError) {
+                notification.classList.add('error');
+            }
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Start bombing
+        startBombingBtn.addEventListener('click', () => {
+            const phoneNumber = phoneNumberInput.value.trim();
+            const selectedMode = document.querySelector('.option-card.active').dataset.mode;
+            const callDuration = parseInt(callDurationRange.value);
+            totalCalls = parseInt(totalCallsInput.value);
+            
+            // Validation
+            if (!phoneNumber) {
+                showNotification('Please enter a phone number', true);
+                return;
+            }
+            
+            if (phoneNumber.length < 10) {
+                showNotification('Please enter a valid phone number', true);
+                return;
+            }
+            
+            if (totalCalls < 10 || totalCalls > 500) {
+                showNotification('Total calls must be between 10 and 500', true);
+                return;
+            }
+            
+            // Reset stats
+            callsMade = 0;
+            callsAnswered = 0;
+            updateStats();
+            
+            // Show results section
+            resultsSection.classList.add('active');
+            
+            // Scroll to results
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // Start bombing simulation
+            isBombing = true;
+            startTime = new Date();
+            
+            // Calculate calls per minute based on mode
+            let callsPerMinute;
+            switch(selectedMode) {
+                case 'standard':
+                    callsPerMinute = 10;
+                    break;
+                case 'aggressive':
+                    callsPerMinute = 20;
+                    break;
+                case 'nuclear':
+                    callsPerMinute = 30;
+                    break;
+            }
+            
+            // Calculate interval based on calls per minute
+            const interval = (60 * 1000) / callsPerMinute;
+            
+            // Start interval
+            bombingInterval = setInterval(() => {
+                if (callsMade < totalCalls && isBombing) {
+                    callsMade++;
+                    
+                    // Randomly determine if call was answered (30% chance)
+                    if (Math.random() < 0.3) {
+                        callsAnswered++;
+                    }
+                    
+                    updateStats();
+                    updateProgress();
+                } else {
+                    stopBombing();
+                    showNotification('Bombing completed successfully!');
+                }
+            }, interval);
+            
+            showNotification('Bombing started successfully!');
+        });
+        
+        // Stop bombing
+        stopBombingBtn.addEventListener('click', () => {
+            stopBombing();
+            showNotification('Bombing stopped');
+        });
+        
+        // Stop bombing function
+        function stopBombing() {
+            isBombing = false;
+            clearInterval(bombingInterval);
+        }
+        
+        // Update stats
+        function updateStats() {
+            callsMadeElement.textContent = callsMade;
+            callsAnsweredElement.textContent = callsAnswered;
+            
+            const successRate = callsMade > 0 ? Math.round((callsAnswered / callsMade) * 100) : 0;
+            successRateElement.textContent = `${successRate}%`;
+            
+            // Update time elapsed
+            if (startTime) {
+                const now = new Date();
+                const elapsedSeconds = Math.floor((now - startTime) / 1000);
+                timeElapsedElement.textContent = `${elapsedSeconds}s`;
+            }
+        }
+        
+        // Update progress
+        function updateProgress() {
+            const progress = Math.round((callsMade / totalCalls) * 100);
+            progressFill.style.width = `${progress}%`;
+            progressText.textContent = `${progress}% Complete`;
+        }
+        
         // Smooth scrolling for navigation links
-        document.querySelectorAll('nav a').forEach(anchor => {
+        document.querySelectorAll('nav a, .hero-buttons a').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 
                 const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
                 
-                window.scrollTo({
-                    top: targetElement.offsetTop - 80,
-                    behavior: 'smooth'
-                });
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
     </script>
