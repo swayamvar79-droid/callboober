@@ -439,6 +439,7 @@
             align-items: center;
             padding: 15px;
             border-bottom: 1px solid #eee;
+            animation: fadeIn 0.5s ease;
         }
 
         .call-item:last-child {
@@ -479,6 +480,71 @@
             0% { opacity: 1; }
             50% { opacity: 0.5; }
             100% { opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Live Call Animation */
+        .live-call-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+            gap: 20px;
+        }
+
+        .phone-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            animation: ring 1.5s infinite;
+        }
+
+        .call-animation {
+            display: flex;
+            gap: 10px;
+        }
+
+        .call-bar {
+            width: 8px;
+            height: 30px;
+            background: var(--primary);
+            border-radius: 4px;
+            animation: sound 0.8s infinite ease-in-out;
+        }
+
+        .call-bar:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .call-bar:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .call-bar:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+
+        .call-bar:nth-child(5) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes ring {
+            0% { transform: rotate(0); }
+            10% { transform: rotate(-15deg); }
+            20% { transform: rotate(15deg); }
+            30% { transform: rotate(-15deg); }
+            40% { transform: rotate(15deg); }
+            50% { transform: rotate(0); }
+            100% { transform: rotate(0); }
+        }
+
+        @keyframes sound {
+            0% { transform: scaleY(0.5); }
+            50% { transform: scaleY(2); }
+            100% { transform: scaleY(0.5); }
         }
 
         /* Pricing */
@@ -1002,6 +1068,22 @@
                 <p>Your call bombing attack is currently running</p>
             </div>
             
+            <div class="live-call-animation">
+                <div class="phone-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <div class="call-animation">
+                    <div class="call-bar"></div>
+                    <div class="call-bar"></div>
+                    <div class="call-bar"></div>
+                    <div class="call-bar"></div>
+                    <div class="call-bar"></div>
+                </div>
+                <div class="phone-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+            </div>
+            
             <div class="stats-container">
                 <div class="stat-card">
                     <div class="stat-value" id="calls-made">0</div>
@@ -1390,6 +1472,7 @@
             callsAnswered = 0;
             callLogContainer.innerHTML = '';
             updateStats();
+            updateProgress();
             
             // Show results section
             resultsSection.classList.add('active');
