@@ -3,1597 +3,453 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CallBomber Pro | Ultimate Call Prank Service</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>AI Model Studio (Functional)</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Set default font to Inter -->
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        :root {
-            --primary: #6c63ff;
-            --secondary: #ff6584;
-            --dark: #2a2a3c;
-            --light: #f8f9fa;
-            --success: #28a745;
-            --warning: #ffc107;
-            --danger: #dc3545;
-            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
-        }
-
         body {
-            background-color: #f5f7ff;
-            color: var(--dark);
-            line-height: 1.6;
-            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
         }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
+        .bg-gradient-gemini {
+            background-image: linear-gradient(to right, #4F46E5, #3B82F6);
         }
-
-        /* Header Styles */
-        header {
-            background: var(--dark);
-            color: white;
-            padding: 15px 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.8rem;
-            font-weight: 700;
-        }
-
-        .logo i {
-            color: var(--primary);
-        }
-
-        .logo span {
-            color: var(--primary);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 25px;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-        }
-
-        nav a:hover {
-            color: var(--primary);
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: var(--primary);
-            transition: width 0.3s;
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        .auth-buttons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: none;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-        }
-
-        .btn-outline:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-primary {
-            background: var(--gradient);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(108, 99, 255, 0.3);
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 100px 0;
-            background: linear-gradient(rgba(42, 42, 60, 0.9), rgba(42, 42, 60, 0.9)), url('https://images.unsplash.com/photo-1587560699334-cc4ff634909a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            opacity: 0.9;
-        }
-
-        .hero-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        /* Features Section */
-        .features {
-            padding: 100px 0;
-            background: white;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-title h2 {
-            font-size: 2.5rem;
-            color: var(--dark);
-            margin-bottom: 15px;
-        }
-
-        .section-title p {
-            color: #666;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .feature-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-            text-align: center;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .feature-icon {
-            width: 80px;
-            height: 80px;
-            background: var(--gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            color: white;
-            font-size: 2rem;
-        }
-
-        .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-
-        /* How It Works */
-        .how-it-works {
-            padding: 100px 0;
-            background: #f5f7ff;
-        }
-
-        .steps {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .step {
-            flex: 1;
-            min-width: 250px;
-            text-align: center;
-            padding: 30px 20px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            position: relative;
-        }
-
-        .step-number {
-            width: 50px;
-            height: 50px;
-            background: var(--gradient);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 0 auto 20px;
-        }
-
-        /* Bomber Tool */
-        .bomber-tool {
-            padding: 100px 0;
-            background: white;
-        }
-
-        .tool-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e1e5ee;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-control:focus {
-            border-color: var(--primary);
-            outline: none;
-        }
-
-        .input-with-icon {
-            position: relative;
-        }
-
-        .input-with-icon i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #666;
-        }
-
-        .input-with-icon input {
-            padding-left: 45px;
-        }
-
-        .tool-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-
-        .option-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-        }
-
-        .option-card:hover, .option-card.active {
-            border-color: var(--primary);
-            background: rgba(108, 99, 255, 0.05);
-        }
-
-        .option-card i {
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-
-        .btn-large {
-            padding: 15px 30px;
-            font-size: 1.1rem;
-            width: 100%;
-        }
-
-        /* Results Section */
-        .results {
-            padding: 80px 0;
-            background: #f5f7ff;
-            display: none;
-        }
-
-        .results.active {
-            display: block;
-        }
-
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .stat-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-
-        .progress-container {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .progress-bar {
-            height: 20px;
-            background: #e1e5ee;
-            border-radius: 10px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--gradient);
-            width: 0%;
-            transition: width 2s ease-in-out;
-        }
-
-        /* Call Log */
-        .call-log {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            margin-top: 30px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .call-log h3 {
-            margin-bottom: 20px;
-            color: var(--dark);
-        }
-
-        .call-item {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .call-item:last-child {
-            border-bottom: none;
-        }
-
-        .call-status {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            margin-right: 15px;
-        }
-
-        .call-status.ringing {
-            background: var(--warning);
-            animation: pulse 1.5s infinite;
-        }
-
-        .call-status.answered {
-            background: var(--success);
-        }
-
-        .call-status.failed {
-            background: var(--danger);
-        }
-
-        .call-number {
-            font-weight: 600;
-            margin-right: auto;
-        }
-
-        .call-time {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Live Call Animation */
-        .live-call-animation {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 30px 0;
-            gap: 20px;
-        }
-
-        .phone-icon {
-            font-size: 3rem;
-            color: var(--primary);
-            animation: ring 1.5s infinite;
-        }
-
-        .call-animation {
-            display: flex;
-            gap: 10px;
-        }
-
-        .call-bar {
-            width: 8px;
-            height: 30px;
-            background: var(--primary);
-            border-radius: 4px;
-            animation: sound 0.8s infinite ease-in-out;
-        }
-
-        .call-bar:nth-child(2) {
-            animation-delay: 0.1s;
-        }
-
-        .call-bar:nth-child(3) {
-            animation-delay: 0.2s;
-        }
-
-        .call-bar:nth-child(4) {
-            animation-delay: 0.3s;
-        }
-
-        .call-bar:nth-child(5) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes ring {
-            0% { transform: rotate(0); }
-            10% { transform: rotate(-15deg); }
-            20% { transform: rotate(15deg); }
-            30% { transform: rotate(-15deg); }
-            40% { transform: rotate(15deg); }
-            50% { transform: rotate(0); }
-            100% { transform: rotate(0); }
-        }
-
-        @keyframes sound {
-            0% { transform: scaleY(0.5); }
-            50% { transform: scaleY(2); }
-            100% { transform: scaleY(0.5); }
-        }
-
-        /* Pricing */
-        .pricing {
-            padding: 100px 0;
-            background: #f5f7ff;
-        }
-
-        .pricing-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .pricing-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
-            position: relative;
-        }
-
-        .pricing-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .pricing-card.popular {
-            border: 3px solid var(--primary);
-            transform: scale(1.05);
-        }
-
-        .pricing-card.popular:hover {
-            transform: scale(1.05) translateY(-10px);
-        }
-
-        .popular-badge {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background: var(--gradient);
-            color: white;
-            padding: 8px 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            border-bottom-left-radius: 15px;
-        }
-
-        .pricing-header {
-            padding: 30px;
-            text-align: center;
-            background: var(--dark);
-            color: white;
-        }
-
-        .pricing-header h3 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-
-        .price {
-            font-size: 3rem;
-            font-weight: 700;
-            margin: 15px 0;
-        }
-
-        .price span {
-            font-size: 1rem;
-            opacity: 0.8;
-        }
-
-        .pricing-body {
-            padding: 30px;
-        }
-
-        .pricing-features {
-            list-style: none;
-            margin-bottom: 30px;
-        }
-
-        .pricing-features li {
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            align-items: center;
-        }
-
-        .pricing-features li i {
-            color: var(--success);
-            margin-right: 10px;
-        }
-
-        /* Testimonials */
-        .testimonials {
-            padding: 100px 0;
-            background: white;
-        }
-
-        .testimonial-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .testimonial-card {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .testimonial-text {
-            font-style: italic;
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .testimonial-text::before {
-            content: """;
-            font-size: 4rem;
-            color: var(--primary);
-            opacity: 0.2;
-            position: absolute;
-            top: -20px;
-            left: -10px;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .author-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-        }
-
-        .author-info h4 {
-            margin-bottom: 5px;
-        }
-
-        .author-info p {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        /* FAQ */
-        .faq {
-            padding: 100px 0;
-            background: #f5f7ff;
-        }
-
-        .faq-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .faq-item {
-            margin-bottom: 20px;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .faq-question {
-            padding: 20px;
-            background: white;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-        }
-
-        .faq-answer {
-            padding: 0 20px;
-            background: white;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s, padding 0.3s;
-        }
-
-        .faq-item.active .faq-answer {
-            padding: 20px;
-            max-height: 500px;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 70px 0 20px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 50px;
-        }
-
-        .footer-column h3 {
-            font-size: 1.3rem;
-            margin-bottom: 25px;
-            position: relative;
-        }
-
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -10px;
-            width: 40px;
-            height: 3px;
-            background: var(--primary);
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 15px;
-        }
-
-        .footer-column a {
-            color: #bbb;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-column a:hover {
-            color: var(--primary);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            transition: all 0.3s;
-        }
-
-        .social-links a:hover {
-            background: var(--primary);
-            transform: translateY(-5px);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #bbb;
-            font-size: 0.9rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            nav ul {
-                gap: 15px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .steps {
-                flex-direction: column;
-            }
-
-            .pricing-card.popular {
-                transform: none;
-            }
-            
-            .pricing-card.popular:hover {
-                transform: translateY(-10px);
-            }
-        }
-
-        /* Notification */
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 25px;
-            background: var(--success);
-            color: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            z-index: 1001;
-            display: none;
-            transform: translateX(150%);
-            transition: transform 0.3s;
-        }
-
-        .notification.show {
-            display: block;
-            transform: translateX(0);
-        }
-
-        .notification.error {
-            background: var(--danger);
+        .hover\:bg-gradient-gemini:hover {
+            background-image: linear-gradient(to right, #3B82F6, #4F46E5);
         }
     </style>
 </head>
-<body>
-    <!-- Notification -->
-    <div class="notification" id="notification"></div>
+<body class="bg-gray-100 p-4 sm:p-6 flex flex-col items-center min-h-screen">
 
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <i class="fas fa-phone-alt"></i>
-                    Call<span>Bomber</span> Pro
-                </div>
-                <nav>
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#features">Features</a></li>
-                        <li><a href="#how-it-works">How It Works</a></li>
-                        <li><a href="#bomber-tool">Bomber Tool</a></li>
-                        <li><a href="#pricing">Pricing</a></li>
-                        <li><a href="#testimonials">Testimonials</a></li>
-                        <li><a href="#faq">FAQ</a></li>
-                    </ul>
-                </nav>
-                <div class="auth-buttons">
-                    <a href="#" class="btn btn-outline">Login</a>
-                    <a href="#" class="btn btn-primary">Sign Up</a>
-                </div>
-            </div>
+    <div id="app" class="w-full max-w-lg bg-white rounded-xl shadow-2xl p-6 sm:p-8 space-y-6">
+        
+        <!-- Header -->
+        <div class="text-center">
+            <h1 class="text-3xl font-extrabold text-blue-600 flex items-center justify-center space-x-2">
+                <!-- Zap Icon (Inline SVG) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                <span>AI Model Studio (Gemini Powered)</span>
+            </h1>
+            <p class="text-sm text-gray-500 mt-1">Virtual Try-On UI Concept - Now functional with Gemini</p>
         </div>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="container">
-            <h1>Ultimate Call Bomber Service</h1>
-            <p>Prank your friends with our advanced call bombing service. Multiple modes, customizable settings, and guaranteed fun!</p>
-            <div class="hero-buttons">
-                <a href="#bomber-tool" class="btn btn-primary">Start Bombing Now</a>
-                <a href="#how-it-works" class="btn btn-outline">How It Works</a>
-            </div>
-        </div>
-    </section>
+        <!-- Image Selection Area -->
+        <div class="border border-dashed border-gray-300 rounded-xl p-4 transition duration-300 hover:border-blue-400">
+            <label class="block text-sm font-medium text-gray-700 mb-2">1. Product Image (Required)</label>
+            
+            <input 
+                type="file" 
+                accept="image/*" 
+                id="file-upload" 
+                class="hidden"
+            />
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Powerful Features</h2>
-                <p>Our call bomber comes packed with features to make your pranking experience unforgettable</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3>Lightning Fast</h3>
-                    <p>Our servers deliver calls instantly with no delays. Experience the fastest call bombing service available.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Completely Anonymous</h3>
-                    <p>Your identity remains hidden throughout the process. We don't store any personal information.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-sliders-h"></i>
-                    </div>
-                    <h3>Customizable Settings</h3>
-                    <p>Adjust call frequency, duration, and patterns to create the perfect prank experience.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <h3>Worldwide Coverage</h3>
-                    <p>Bomb numbers from any country with our extensive global network of servers.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Mobile Optimized</h3>
-                    <p>Use our service on any device. Our interface works perfectly on smartphones and tablets.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3>24/7 Support</h3>
-                    <p>Our support team is available around the clock to help with any issues or questions.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works -->
-    <section class="how-it-works" id="how-it-works">
-        <div class="container">
-            <div class="section-title">
-                <h2>How It Works</h2>
-                <p>Get started with call bombing in just three simple steps</p>
-            </div>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Enter Target Number</h3>
-                    <p>Input the phone number you want to bomb. Make sure to include the country code.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Customize Settings</h3>
-                    <p>Choose call frequency, duration, and select from various bombing modes.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Launch Attack</h3>
-                    <p>Click the start button and watch as our system floods the target with calls.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Bomber Tool -->
-    <section class="bomber-tool" id="bomber-tool">
-        <div class="container">
-            <div class="section-title">
-                <h2>Call Bomber Tool</h2>
-                <p>Start bombing right now with our powerful and easy-to-use tool</p>
-            </div>
-            <div class="tool-container">
-                <div class="form-group">
-                    <label for="phone-number">Target Phone Number</label>
-                    <div class="input-with-icon">
-                        <i class="fas fa-phone"></i>
-                        <input type="text" id="phone-number" class="form-control" placeholder="+1 234 567 8900">
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label>Bombing Mode</label>
-                    <div class="tool-options">
-                        <div class="option-card active" data-mode="standard">
-                            <i class="fas fa-bomb"></i>
-                            <h4>Standard</h4>
-                            <p>10 calls per minute</p>
-                        </div>
-                        <div class="option-card" data-mode="aggressive">
-                            <i class="fas fa-fire"></i>
-                            <h4>Aggressive</h4>
-                            <p>20 calls per minute</p>
-                        </div>
-                        <div class="option-card" data-mode="nuclear">
-                            <i class="fas fa-skull"></i>
-                            <h4>Nuclear</h4>
-                            <p>30+ calls per minute</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="call-duration">Call Duration (seconds)</label>
-                    <input type="range" id="call-duration" class="form-control" min="10" max="60" value="30">
-                    <div class="range-value">30 seconds</div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="total-calls">Total Calls</label>
-                    <input type="number" id="total-calls" class="form-control" value="50" min="10" max="500">
-                </div>
-                
-                <button class="btn btn-primary btn-large" id="start-bombing">
-                    <i class="fas fa-play-circle"></i> Start Bombing
+            <div class="flex space-x-3">
+                <button
+                    id="select-image-btn"
+                    class="flex-1 px-4 py-3 bg-indigo-500 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-600 transition duration-150 flex items-center justify-center space-x-2"
+                >
+                    <!-- FileUp Icon (Inline SVG) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    <span>Select Product Image</span>
+                </button>
+                <button
+                    disabled
+                    class="px-4 py-3 bg-gray-300 text-gray-700 font-semibold rounded-lg shadow-md cursor-not-allowed flex items-center justify-center space-x-2"
+                >
+                    <!-- Camera Icon (Inline SVG) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h4"/><path d="M14 2h4a2 2 0 0 1 2 2v4"/><path d="M6 22H4a2 2 0 0 1-2-2v-4"/><path d="M14 22h4a2 2 0 0 0 2-2v-4"/><path d="M10 12h.01"/><path d="M14 12h.01"/><path d="M10 16h4"/></svg>
+                    <span>Capture (Disabled)</span>
                 </button>
             </div>
         </div>
-    </section>
 
-    <!-- Results Section -->
-    <section class="results" id="results">
-        <div class="container">
-            <div class="section-title">
-                <h2>Bombing in Progress</h2>
-                <p>Your call bombing attack is currently running</p>
-            </div>
-            
-            <div class="live-call-animation">
-                <div class="phone-icon">
-                    <i class="fas fa-phone"></i>
-                </div>
-                <div class="call-animation">
-                    <div class="call-bar"></div>
-                    <div class="call-bar"></div>
-                    <div class="call-bar"></div>
-                    <div class="call-bar"></div>
-                    <div class="call-bar"></div>
-                </div>
-                <div class="phone-icon">
-                    <i class="fas fa-mobile-alt"></i>
+        <!-- Preview and Prompt -->
+        <div class="space-y-4">
+            <div id="image-preview-container" class="relative h-48 bg-gray-200 rounded-xl overflow-hidden flex items-center justify-center border-2 border-gray-300 shadow-inner">
+                <img 
+                    id="image-preview" 
+                    src="" 
+                    alt="Product Preview" 
+                    class="object-cover w-full h-full hidden" 
+                />
+                <div id="preview-placeholder" class="text-gray-500 flex flex-col items-center">
+                    <!-- Image Icon (Inline SVG) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                    <span>Product Preview Area</span>
                 </div>
             </div>
-            
-            <div class="stats-container">
-                <div class="stat-card">
-                    <div class="stat-value" id="calls-made">0</div>
-                    <p>Calls Made</p>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="calls-answered">0</div>
-                    <p>Calls Answered</p>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="success-rate">0%</div>
-                    <p>Success Rate</p>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="time-elapsed">0s</div>
-                    <p>Time Elapsed</p>
-                </div>
-            </div>
-            
-            <div class="progress-container">
-                <h3>Bombing Progress</h3>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress-fill"></div>
-                </div>
-                <div class="progress-text" id="progress-text">0% Complete</div>
-                
-                <button class="btn btn-primary" id="stop-bombing" style="margin-top: 20px;">
-                    <i class="fas fa-stop-circle"></i> Stop Bombing
+
+            <label class="block text-sm font-medium text-gray-700">2. Generation Prompt (e.g., Model, Setting)</label>
+            <div class="relative">
+                <textarea
+                    id="prompt-input"
+                    placeholder="Example: A tall, smiling male model with short brown hair, standing on a beach at sunset."
+                    rows="3"
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition resize-none pr-32"
+                ></textarea>
+                <button
+                    id="enhance-prompt-btn"
+                    class="absolute bottom-1 right-1 px-3 py-2 text-xs bg-indigo-500 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-600 transition duration-150 flex items-center justify-center space-x-1 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                >
+                    <!-- Sparkle Icon (Inline SVG) -->
+                    <svg id="sparkle-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fill-current text-yellow-300"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg id="enhance-loader-icon" class="w-4 h-4 animate-spin hidden text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                    <span>Enhance Prompt ✨</span>
                 </button>
             </div>
-
-            <div class="call-log">
-                <h3>Call Log</h3>
-                <div id="call-log-container">
-                    <!-- Call log items will be added here dynamically -->
-                </div>
-            </div>
         </div>
-    </section>
 
-    <!-- Pricing -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <div class="section-title">
-                <h2>Affordable Pricing</h2>
-                <p>Choose the plan that fits your bombing needs</p>
-            </div>
-            <div class="pricing-cards">
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>Starter</h3>
-                        <div class="price">$0<span>/month</span></div>
-                        <p>For beginners</p>
-                    </div>
-                    <div class="pricing-body">
-                        <ul class="pricing-features">
-                            <li><i class="fas fa-check"></i> 10 calls per day</li>
-                            <li><i class="fas fa-check"></i> Standard bombing mode</li>
-                            <li><i class="fas fa-check"></i> Basic customization</li>
-                            <li><i class="fas fa-times"></i> No priority support</li>
-                            <li><i class="fas fa-times"></i> Limited countries</li>
-                        </ul>
-                        <button class="btn btn-outline" style="width: 100%;">Get Started</button>
-                    </div>
-                </div>
-                
-                <div class="pricing-card popular">
-                    <div class="popular-badge">Most Popular</div>
-                    <div class="pricing-header">
-                        <h3>Pro</h3>
-                        <div class="price">$9.99<span>/month</span></div>
-                        <p>For serious pranksters</p>
-                    </div>
-                    <div class="pricing-body">
-                        <ul class="pricing-features">
-                            <li><i class="fas fa-check"></i> 500 calls per day</li>
-                            <li><i class="fas fa-check"></i> All bombing modes</li>
-                            <li><i class="fas fa-check"></i> Advanced customization</li>
-                            <li><i class="fas fa-check"></i> Priority support</li>
-                            <li><i class="fas fa-check"></i> All countries available</li>
-                        </ul>
-                        <button class="btn btn-primary" style="width: 100%;">Get Started</button>
-                    </div>
-                </div>
-                
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>Enterprise</h3>
-                        <div class="price">$29.99<span>/month</span></div>
-                        <p>For bombing experts</p>
-                    </div>
-                    <div class="pricing-body">
-                        <ul class="pricing-features">
-                            <li><i class="fas fa-check"></i> Unlimited calls</li>
-                            <li><i class="fas fa-check"></i> All bombing modes</li>
-                            <li><i class="fas fa-check"></i> Full customization</li>
-                            <li><i class="fas fa-check"></i> 24/7 premium support</li>
-                            <li><i class="fas fa-check"></i> All countries + API access</li>
-                        </ul>
-                        <button class="btn btn-outline" style="width: 100%;">Get Started</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        <!-- Action Button -->
+        <button
+            id="generate-model-btn"
+            disabled
+            class="w-full py-4 text-white font-extrabold rounded-xl shadow-lg transition duration-300 flex items-center justify-center space-x-3 bg-gray-400 cursor-not-allowed"
+        >
+            <!-- Zap Icon -->
+            <svg id="zap-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <!-- Loader Icon (Hidden by default) -->
+            <svg id="loader-icon" class="w-6 h-6 animate-spin hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+            <span id="button-text">Generate AI Model ✨</span>
+        </button>
 
-    <!-- Testimonials -->
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <div class="section-title">
-                <h2>User Testimonials</h2>
-                <p>See what our users have to say about our service</p>
-            </div>
-            <div class="testimonial-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        This service is absolutely amazing! I pranked my friend on his birthday and he still has no idea it was me. The calls came in so fast he couldn't even answer his phone!
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">JD</div>
-                        <div class="author-info">
-                            <h4>John Doe</h4>
-                            <p>Pro User</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        I've tried several call bomber services, but this one is by far the best. The interface is intuitive, and the customization options are incredible. Worth every penny!
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">SJ</div>
-                        <div class="author-info">
-                            <h4>Sarah Johnson</h4>
-                            <p>Enterprise User</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        As a content creator, I use this service for prank videos. My viewers love it! The nuclear mode is absolutely insane. Keep up the great work!
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">MR</div>
-                        <div class="author-info">
-                            <h4>Mike Roberts</h4>
-                            <p>YouTuber</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- Error Message -->
+        <div id="error-message" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl relative" role="alert">
+            <strong class="font-bold">Error!</strong>
+            <span id="error-text" class="block sm:inline"></span>
         </div>
-    </section>
 
-    <!-- FAQ -->
-    <section class="faq" id="faq">
-        <div class="container">
-            <div class="section-title">
-                <h2>Frequently Asked Questions</h2>
-                <p>Find answers to common questions about our service</p>
+        <!-- Result Section -->
+        <div id="result-section" class="hidden space-y-4 pt-4 border-t border-gray-200">
+            <h2 class="text-xl font-bold text-gray-800 flex items-center space-x-2">
+                <!-- Image Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-teal-500"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                <span>Generated AI Mockup</span>
+            </h2>
+            <div class="relative w-full aspect-[4/5] rounded-xl overflow-hidden border-4 border-teal-500 shadow-xl">
+              <img 
+                id="generated-image"
+                src="" 
+                alt="Generated Model" 
+                class="object-cover w-full h-full" 
+              />
+              <div class="absolute top-3 right-3 bg-teal-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg">
+                  ✓ Success
+              </div>
             </div>
-            <div class="faq-container">
-                <div class="faq-item active">
-                    <div class="faq-question">
-                        Is this service legal?
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        Our service is intended for entertainment purposes only. We encourage users to only prank friends who will appreciate the joke and to always respect local laws and regulations regarding phone communications.
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        Can I get caught using this service?
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        We use advanced anonymization techniques to protect your identity. However, we always recommend using our service responsibly and only with people who you know will take it as a joke.
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        How many calls can I send at once?
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        The number of calls depends on your subscription plan. Free users can send up to 10 calls per day, while Pro and Enterprise users have significantly higher limits or unlimited calls.
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        Does it work internationally?
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        Yes! Our service works with phone numbers from most countries. Just make sure to include the country code when entering the target phone number.
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        Can I cancel my subscription anytime?
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        Absolutely! You can cancel your subscription at any time from your account settings. There are no cancellation fees or hidden charges.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>CallBomber Pro</h3>
-                    <p>The ultimate call bombing service for pranksters. Safe, anonymous, and incredibly fun!</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#features">Features</a></li>
-                        <li><a href="#how-it-works">How It Works</a></li>
-                        <li><a href="#bomber-tool">Bomber Tool</a></li>
-                        <li><a href="#pricing">Pricing</a></li>
-                        <li><a href="#testimonials">Testimonials</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Legal</h3>
-                    <ul>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Cookie Policy</a></li>
-                        <li><a href="#">Disclaimer</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Contact Us</h3>
-                    <ul>
-                        <li><i class="fas fa-envelope"></i> support@callbomberpro.com</li>
-                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
-                        <li><i class="fas fa-map-marker-alt"></i> 123 Prank Street, Jesterville</li>
-                    </ul>
-                </div>
+            <!-- Action Buttons for Result -->
+            <div class="flex space-x-3 mt-4">
+              <button
+                disabled
+                class="flex-1 py-3 bg-gray-200 text-gray-700 font-medium rounded-lg shadow-md cursor-not-allowed flex items-center justify-center space-x-2"
+              >
+                <!-- Save Icon (Inline SVG) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                <span>Save (Disabled)</span>
+              </button>
+              <button
+                disabled
+                class="flex-1 py-3 bg-gray-200 text-gray-700 font-medium rounded-lg shadow-md cursor-not-allowed flex items-center justify-center space-x-2"
+              >
+                <!-- Share2 Icon (Inline SVG) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                <span>Share (Disabled)</span>
+              </button>
+              <button
+                id="retry-btn"
+                class="flex-1 py-3 bg-red-500 text-white font-medium rounded-lg shadow-md hover:bg-red-600 transition duration-150 flex items-center justify-center space-x-2"
+              >
+                <!-- RotateCcw Icon (Inline SVG) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 1v6h6"/><path d="M3 15a9 9 0 1 0 5.25-10.25l-2.5-2.5"/></svg>
+                <span>Retry Generation</span>
+              </button>
             </div>
-            
-            <div class="copyright">
-                &copy; 2023 CallBomber Pro. All rights reserved. | For entertainment purposes only.
-            </div>
-        </div>
-    </footer>
+          </div>
+
+    </div>
 
     <script>
-        // DOM Elements
-        const phoneNumberInput = document.getElementById('phone-number');
-        const callDurationRange = document.getElementById('call-duration');
-        const rangeValue = document.querySelector('.range-value');
-        const totalCallsInput = document.getElementById('total-calls');
-        const startBombingBtn = document.getElementById('start-bombing');
-        const stopBombingBtn = document.getElementById('stop-bombing');
-        const resultsSection = document.getElementById('results');
-        const progressFill = document.getElementById('progress-fill');
-        const progressText = document.getElementById('progress-text');
-        const callsMadeElement = document.getElementById('calls-made');
-        const callsAnsweredElement = document.getElementById('calls-answered');
-        const successRateElement = document.getElementById('success-rate');
-        const timeElapsedElement = document.getElementById('time-elapsed');
-        const callLogContainer = document.getElementById('call-log-container');
-        const notification = document.getElementById('notification');
-        
-        // Bombing state
-        let isBombing = false;
-        let bombingInterval;
-        let startTime;
-        let callsMade = 0;
-        let callsAnswered = 0;
-        let totalCalls = 0;
-        
-        // Update range value display
-        callDurationRange.addEventListener('input', () => {
-            rangeValue.textContent = `${callDurationRange.value} seconds`;
-        });
-        
-        // Option card selection
-        document.querySelectorAll('.option-card').forEach(card => {
-            card.addEventListener('click', () => {
-                document.querySelectorAll('.option-card').forEach(c => {
-                    c.classList.remove('active');
-                });
-                card.classList.add('active');
+        // --- GEMINI API Configuration ---
+        const API_KEY = ""; // Placeholder for Canvas environment
+        const GENERATION_MODEL = 'gemini-2.5-flash-image-preview'; // For image generation
+        const ENHANCE_MODEL = 'gemini-2.5-flash-preview-09-2025'; // For text enhancement
+        const BASE_URL = 'https://generativelanguage.googleapis.com/v1beta/models/';
+
+        // Global state variables
+        let selectedFile = null;
+
+        // DOM elements
+        const fileUpload = document.getElementById('file-upload');
+        const selectImageBtn = document.getElementById('select-image-btn');
+        const imagePreview = document.getElementById('image-preview');
+        const previewPlaceholder = document.getElementById('preview-placeholder');
+        const promptInput = document.getElementById('prompt-input');
+        const generateBtn = document.getElementById('generate-model-btn');
+        const buttonText = document.getElementById('button-text');
+        const zapIcon = document.getElementById('zap-icon');
+        const loaderIcon = document.getElementById('loader-icon');
+        const errorMessageDiv = document.getElementById('error-message');
+        const errorText = document.getElementById('error-text');
+        const resultSection = document.getElementById('result-section');
+        const generatedImage = document.getElementById('generated-image');
+        const retryBtn = document.getElementById('retry-btn');
+        const enhancePromptBtn = document.getElementById('enhance-prompt-btn');
+        const sparkleIcon = document.getElementById('sparkle-icon');
+        const enhanceLoaderIcon = document.getElementById('enhance-loader-icon');
+
+
+        // --- Utility Functions ---
+
+        const fileToBase64 = (file) => {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result.split(',')[1]); // Only need the base64 part
+                reader.onerror = error => reject(error);
+                reader.readAsDataURL(file);
             });
-        });
-        
-        // FAQ toggle functionality
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const item = question.parentElement;
-                item.classList.toggle('active');
-            });
-        });
-        
-        // Show notification
-        function showNotification(message, isError = false) {
-            notification.textContent = message;
-            notification.className = 'notification';
-            
-            if (isError) {
-                notification.classList.add('error');
+        };
+
+        const showError = (message) => {
+            errorText.textContent = message;
+            errorMessageDiv.classList.remove('hidden');
+        };
+
+        const hideError = () => {
+            errorMessageDiv.classList.add('hidden');
+        };
+
+        const updateGenerateButton = () => {
+            const isPromptValid = promptInput.value.trim().length > 0;
+            const canGenerate = selectedFile !== null && isPromptValid;
+
+            if (canGenerate) {
+                generateBtn.removeAttribute('disabled');
+                generateBtn.classList.remove('bg-gray-400', 'cursor-not-allowed');
+                generateBtn.classList.add('bg-gradient-gemini', 'hover:bg-gradient-gemini', 'transform', 'hover:scale-[1.01]');
+            } else {
+                generateBtn.setAttribute('disabled', 'true');
+                generateBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
+                generateBtn.classList.remove('bg-gradient-gemini', 'hover:bg-gradient-gemini', 'transform', 'hover:scale-[1.01]');
             }
-            
-            notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-        
-        // Add call log entry
-        function addCallLogEntry(number, status) {
-            const callItem = document.createElement('div');
-            callItem.className = 'call-item';
-            
-            const statusClass = status === 'ringing' ? 'ringing' : 
-                              status === 'answered' ? 'answered' : 'failed';
-            
-            const now = new Date();
-            const timeString = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
-            
-            callItem.innerHTML = `
-                <div class="call-status ${statusClass}"></div>
-                <div class="call-number">${number}</div>
-                <div class="call-time">${timeString}</div>
-            `;
-            
-            callLogContainer.prepend(callItem);
-            
-            // Limit to 20 entries
-            if (callLogContainer.children.length > 20) {
-                callLogContainer.removeChild(callLogContainer.lastChild);
+
+            // Update enhance button state
+            if (isPromptValid) {
+                enhancePromptBtn.removeAttribute('disabled');
+            } else {
+                enhancePromptBtn.setAttribute('disabled', 'true');
             }
-        }
-        
-        // Start bombing
-        startBombingBtn.addEventListener('click', () => {
-            const phoneNumber = phoneNumberInput.value.trim();
-            const selectedMode = document.querySelector('.option-card.active').dataset.mode;
-            const callDuration = parseInt(callDurationRange.value);
-            totalCalls = parseInt(totalCallsInput.value);
-            
-            // Validation
-            if (!phoneNumber) {
-                showNotification('Please enter a phone number', true);
-                return;
+        };
+
+        const setLoadingState = (isLoading) => {
+            if (isLoading) {
+                generateBtn.setAttribute('disabled', 'true');
+                generateBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
+                generateBtn.classList.remove('bg-gradient-gemini', 'hover:bg-gradient-gemini');
+                
+                buttonText.textContent = 'Generating...';
+                zapIcon.classList.add('hidden');
+                loaderIcon.classList.remove('hidden');
+            } else {
+                updateGenerateButton(); // Restore button state based on inputs
+                buttonText.textContent = 'Generate AI Model ✨';
+                zapIcon.classList.remove('hidden');
+                loaderIcon.classList.add('hidden');
             }
-            
-            if (phoneNumber.length < 10) {
-                showNotification('Please enter a valid phone number', true);
-                return;
+        };
+
+        const setEnhanceLoadingState = (isLoading) => {
+            if (isLoading) {
+                enhancePromptBtn.setAttribute('disabled', 'true');
+                sparkleIcon.classList.add('hidden');
+                enhanceLoaderIcon.classList.remove('hidden');
+            } else {
+                updateGenerateButton(); // Restore button state (which handles re-enabling enhance button)
+                sparkleIcon.classList.remove('hidden');
+                enhanceLoaderIcon.classList.add('hidden');
             }
-            
-            if (totalCalls < 10 || totalCalls > 500) {
-                showNotification('Total calls must be between 10 and 500', true);
-                return;
-            }
-            
-            // Reset stats
-            callsMade = 0;
-            callsAnswered = 0;
-            callLogContainer.innerHTML = '';
-            updateStats();
-            updateProgress();
-            
-            // Show results section
-            resultsSection.classList.add('active');
-            
-            // Scroll to results
-            resultsSection.scrollIntoView({ behavior: 'smooth' });
-            
-            // Start bombing simulation
-            isBombing = true;
-            startTime = new Date();
-            
-            // Calculate calls per minute based on mode
-            let callsPerMinute;
-            switch(selectedMode) {
-                case 'standard':
-                    callsPerMinute = 10;
-                    break;
-                case 'aggressive':
-                    callsPerMinute = 20;
-                    break;
-                case 'nuclear':
-                    callsPerMinute = 30;
-                    break;
-            }
-            
-            // Calculate interval based on calls per minute
-            const interval = (60 * 1000) / callsPerMinute;
-            
-            // Start interval
-            bombingInterval = setInterval(() => {
-                if (callsMade < totalCalls && isBombing) {
-                    callsMade++;
-                    
-                    // Generate a fake phone number for display
-                    const fakeNumber = generateFakeNumber();
-                    
-                    // Randomly determine if call was answered (30% chance)
-                    let status;
-                    if (Math.random() < 0.3) {
-                        callsAnswered++;
-                        status = 'answered';
-                    } else {
-                        status = Math.random() < 0.7 ? 'ringing' : 'failed';
+        };
+
+        // --- API Call Functions ---
+
+        const fetchWithBackoff = async (url, options) => {
+            const maxRetries = 3;
+            let delay = 1000;
+
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (response.ok) {
+                        return response;
                     }
-                    
-                    addCallLogEntry(fakeNumber, status);
-                    updateStats();
-                    updateProgress();
+                    if (response.status === 429 || response.status >= 500) {
+                        console.error(`Attempt ${i + 1} failed with status ${response.status}. Retrying in ${delay}ms...`);
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        delay *= 2; // Exponential backoff
+                        continue;
+                    }
+                    throw new Error(`API error: ${response.statusText}`);
+                } catch (error) {
+                    if (i === maxRetries - 1) throw error;
+                    console.error(`Attempt ${i + 1} failed: ${error.message}. Retrying in ${delay}ms...`);
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    delay *= 2; // Exponential backoff
+                }
+            }
+        };
+
+
+        // --- Event Handlers ---
+
+        fileUpload.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                selectedFile = file;
+                hideError();
+                resultSection.classList.add('hidden'); // Clear previous result
+
+                // Show image preview
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    imagePreview.src = reader.result;
+                    imagePreview.classList.remove('hidden');
+                    previewPlaceholder.classList.add('hidden');
+                };
+                reader.readAsDataURL(file);
+                
+                // Suggest a starting prompt if none is present
+                if (!promptInput.value.trim()) {
+                    promptInput.value = 'A model wearing this item, in a studio setting.';
+                }
+            } else {
+                selectedFile = null;
+                imagePreview.classList.add('hidden');
+                previewPlaceholder.classList.remove('hidden');
+            }
+            updateGenerateButton();
+        });
+
+        promptInput.addEventListener('input', updateGenerateButton);
+
+        selectImageBtn.addEventListener('click', () => {
+            fileUpload.click();
+        });
+
+        enhancePromptBtn.addEventListener('click', async () => {
+            if (enhancePromptBtn.disabled) return;
+            
+            const currentPrompt = promptInput.value.trim();
+            if (!currentPrompt) {
+                showError("Please enter a starting prompt to enhance.");
+                return;
+            }
+
+            setEnhanceLoadingState(true);
+            hideError();
+
+            const apiUrl = `${BASE_URL}${ENHANCE_MODEL}:generateContent?key=${API_KEY}`;
+            const systemPrompt = "You are an expert fashion photography director and prompt engineer. Your task is to take a user's brief descriptive prompt for a virtual try-on image and transform it into a single, highly detailed, photorealistic prompt optimized for a modern image generation model. Include details on lighting, camera angle, model description (if not specified, default to 'diverse'), texture, and setting. Do not include any conversational text, only the finalized, enhanced prompt.";
+
+            const payload = {
+                contents: [{ parts: [{ text: currentPrompt }] }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                },
+            };
+
+            try {
+                const response = await fetchWithBackoff(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+                const enhancedText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                if (enhancedText) {
+                    promptInput.value = enhancedText.trim();
                 } else {
-                    stopBombing();
-                    showNotification('Bombing completed successfully!');
+                    showError("Could not enhance prompt. API returned an unexpected response.");
                 }
-            }, interval);
-            
-            showNotification('Bombing started successfully!');
-        });
-        
-        // Generate fake phone number for display
-        function generateFakeNumber() {
-            const prefixes = ['+1', '+44', '+91', '+61', '+49', '+33'];
-            const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
-            
-            let number = '';
-            for (let i = 0; i < 10; i++) {
-                number += Math.floor(Math.random() * 10);
+
+            } catch (err) {
+                console.error("Prompt Enhancement Error:", err);
+                showError("Failed to enhance prompt. Please check the console for details.");
+            } finally {
+                setEnhanceLoadingState(false);
             }
-            
-            return `${prefix} ${number.substring(0, 3)} ${number.substring(3, 6)} ${number.substring(6)}`;
-        }
-        
-        // Stop bombing
-        stopBombingBtn.addEventListener('click', () => {
-            stopBombing();
-            showNotification('Bombing stopped');
         });
-        
-        // Stop bombing function
-        function stopBombing() {
-            isBombing = false;
-            clearInterval(bombingInterval);
-        }
-        
-        // Update stats
-        function updateStats() {
-            callsMadeElement.textContent = callsMade;
-            callsAnsweredElement.textContent = callsAnswered;
-            
-            const successRate = callsMade > 0 ? Math.round((callsAnswered / callsMade) * 100) : 0;
-            successRateElement.textContent = `${successRate}%`;
-            
-            // Update time elapsed
-            if (startTime) {
-                const now = new Date();
-                const elapsedSeconds = Math.floor((now - startTime) / 1000);
-                timeElapsedElement.textContent = `${elapsedSeconds}s`;
+
+
+        generateBtn.addEventListener('click', async () => {
+            if (!selectedFile || generateBtn.disabled) {
+                return;
             }
-        }
-        
-        // Update progress
-        function updateProgress() {
-            const progress = Math.round((callsMade / totalCalls) * 100);
-            progressFill.style.width = `${progress}%`;
-            progressText.textContent = `${progress}% Complete`;
-        }
-        
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('nav a, .hero-buttons a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
+
+            setLoadingState(true);
+            hideError();
+            resultSection.classList.add('hidden');
+
+            try {
+                // 1. Convert selected file to Base64
+                const base64Image = await fileToBase64(selectedFile);
+                const fullPrompt = promptInput.value.trim();
                 
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
+                // 2. Construct API URL and Payload
+                const apiUrl = `${BASE_URL}${GENERATION_MODEL}:generateContent?key=${API_KEY}`;
                 
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
+                const payload = {
+                    contents: [{
+                        parts: [
+                            { text: fullPrompt },
+                            { inlineData: { mimeType: selectedFile.type, data: base64Image } }
+                        ]
+                    }],
+                    generationConfig: {
+                        responseModalities: ['TEXT', 'IMAGE']
+                    },
+                };
+
+                // 3. Call the Image Generation API
+                const response = await fetchWithBackoff(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+
+                // 4. Process the response
+                const base64Data = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
+
+                if (base64Data) {
+                    generatedImage.src = `data:image/png;base64,${base64Data}`;
+                    resultSection.classList.remove('hidden');
+                } else {
+                    const errorDetail = result.error?.message || "Generation failed. Please try a different prompt or image.";
+                    showError(errorDetail);
+                    console.error("API Response Error:", result);
                 }
-            });
+
+            } catch (err) {
+                console.error("Image Generation Error:", err);
+                showError(`Failed to generate image: ${err.message}.`);
+            } finally {
+                setLoadingState(false);
+            }
         });
+
+        retryBtn.addEventListener('click', () => {
+            resultSection.classList.add('hidden');
+            hideError();
+            setLoadingState(false);
+            // Inputs remain the same for easy retry
+        });
+
+        // Initial setup check
+        updateGenerateButton();
+
     </script>
 </body>
 </html>
